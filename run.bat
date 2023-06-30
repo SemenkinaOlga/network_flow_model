@@ -1,9 +1,9 @@
 echo "install dependencies"
 
-python3 -m pip install os pandas numpy ortools json
+python -m pip install pandas numpy ortools
 
 echo "run the script"
 
-python3 RidesOptimizer.py
+python RidesOptimizer.py
 
 echo "the script executed successfully"
