@@ -7,3 +7,5 @@ echo "run the script"
 python RidesOptimizer.py
 
 echo "the script executed successfully"
+
+timeout /t 30
