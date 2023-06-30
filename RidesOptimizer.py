@@ -6,15 +6,20 @@ import numpy as np
 from ortools.graph.python import min_cost_flow
 
 
-def parse_parameters():
+def parse_parameters(path):
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('-d', '--durations_file_path', help='a durations matrix, which encodes the driving duration '
-                                                            'in seconds between each pair of locations')
-    parser.add_argument('-r', '--requests_file_path', help='a .CSV file containing ride requests for a specific day, '
-                                                           'ordered by the requested pickup timestamp, along with their'
-                                                           ' requested pickup and dropoff locations')
-    parser.add_argument('-va', '--vehicles_amount', help='available vehicles amount')
+    parser.add_argument('-d', '--durations_csv_file_path', type=str,
+                        help='a durations matrix, which encodes the driving duration '
+                             'in seconds between each pair of locations',
+                        default=os.path.join('durations_test.csv'))
+    parser.add_argument('-r', '--requests_csv_file_path', type=str,
+                        help='a .CSV file containing ride requests for a specific day, '
+                             'ordered by the requested pickup timestamp, along with their'
+                             ' requested pickup and dropoff locations',
+                        default=os.path.join('requests_test.csv'))
+    parser.add_argument('-va', '--vehicles_amount', type=int, help='available vehicles amount',
+                        default=3)
 
     return parser.parse_args()
 
@@ -342,22 +347,12 @@ def read_parameters(path):
     Returns:
         durations_file_path, requests_file_path, vehicles_amount extracted from arguments or default values
     """
-    args = parse_parameters()
-    durations_file_path = args.durations_file_path
-    requests_file_path = args.requests_file_path
+    args = parse_parameters(path)
+    durations_file_path = args.durations_csv_file_path
+    requests_file_path = args.requests_csv_file_path
     vehicles_amount = args.vehicles_amount
-
-    if args.durations_file_path is None:
-        durations_file_path = path + '\\' + 'durations.csv'
-        print('durations_file_path is not defined, set default value: ' + durations_file_path)
-
-    if args.requests_file_path is None:
-        requests_file_path = path + '\\' + 'requests.csv'
-        print('requests_file_path is not defined, set default value: ' + requests_file_path)
-
-    if args.vehicles_amount is None:
-        vehicles_amount = 30
-        print('vehicles_amount is not defined, set default value: ' + str(vehicles_amount))
+    print(durations_file_path)
+    print(requests_file_path)
 
     return durations_file_path, requests_file_path, vehicles_amount
 
